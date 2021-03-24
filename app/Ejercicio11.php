@@ -7,10 +7,16 @@ que las calcule invocando la función pow).
 
 *******************************************************************************/
 
-for($i=1;$i<5;$i++)
+function Potencia ()
 {
-    for($j=$i;$j<5;$j++)
+    for($i=1;$i<5;$i++)
     {
-        echo pow($i, $j);
+        for($j=$i;$j<5;$j++)
+        {
+            echo pow($i, $j);
+        }
     }
 }
+
+
+Potencia();
