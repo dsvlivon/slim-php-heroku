@@ -22,3 +22,4 @@ function InvertirPalabra($string)
 }
 
 InvertirPalabra($v);
+?>
