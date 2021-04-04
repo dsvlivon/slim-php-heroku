@@ -1,16 +1,21 @@
 <html>
 	<head>
-		<title>Env&iacute;o por ??</title>
+		<title>Login </title>
 	</head>
 	<body>
 		<form action="destino.php" method="post"> <!--para pasarlo por post se necesita si o si un formulario html-->
-			Nombre:<input type="text" name="usuario" />
+			Nombre:<input type="text" name="nombre" />
 			<br/>
             Mail:<input type="text" name="mail" />
 			<br/>
-			Edad:<input type="text" name="clave" />
+			Clave:<input type="text" name="clave" />
 			<br/>
 			<input type="submit" value="ENVIAR" />
+		</form>
+
+		<form action="listado.php" method="get">
+			<input type="submit" value="CARGAR CSV"/>
+			
 		</form>
 	</body>
 </html>

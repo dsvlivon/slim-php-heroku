@@ -13,7 +13,7 @@ class archivos
         if($msg!=null)
 	    {
             $p = fopen("usuarios.csv","a");//con "a" agrega datos y c "w" sobreescribe  
-            fwrite($p, $cabecera);
+            //fwrite($p, $cabecera);
             fwrite($p, $msg);
 	        fclose($p);
             $estado = "archivo guardado!";
@@ -27,6 +27,4 @@ class archivos
     }
 
 }   
-
-
 ?>
