@@ -1,0 +1,9 @@
+si tenemos problema d replicar datos, hay q incluir include "nombre_archivo".php_1 
+para solucionarlo.
+
+modificadores: protected- private- public (aparece public == var)
+
+se usa los stdclass(stdobj) para trnasportar info. los objetos se crean y modifican d forma dinamica
+es importante saber del otro lado q recibo xq no se puede castear.
+Dijo algo d hacer un varDump() para volcar todo lo q tiene y capturarlo, pero no llegue a oir
+
