@@ -6,13 +6,15 @@ class usuario
     public $_nombre;
     public $_clave;
     public $_mail;
+    public $_fecha;
+    public $_id;
     
     public function __construct($n,$c,$m)
     {
         $this->_nombre = $n;
         $this->_clave = $c;
-        $this->_mail = $m;
-    }    
+        $this->_mail = $m;        
+    }        
 
     static function _CargaLista($archivo)
     {
@@ -62,7 +64,7 @@ class usuario
         }
     }
 
-    static function _Persistir($u)
+    static function _PersistirCsv($u)
     {
         if($u->_nombre!=null && $u->_mail!=null && $u->_clave!=null)
         {
@@ -72,7 +74,7 @@ class usuario
             {
                 if($t->_nombre != $u->_nombre && $t->_clave != $u->_clave && $t->_mail != $u->_mail)
                 {
-                    $msg = "\n".$u->_nombre.",".$u->_mail.",".date("Y/m/d").";";
+                    $msg = "\n".$u->_nombre.",".$u->_mail.",".$u->_fecha.$u->_id.";";
                     archivos::_GuardarCsv($msg);
                     echo "Bienvenido nuevo usuario";
                 }    
@@ -98,14 +100,14 @@ class usuario
             //$u->_ToString();
             if(strcmp($u->_nombre, $root) ==0 && strcmp($u->_clave, $key)==0)
             {
-                return "Bienvenido ADMIN!<br/>";
+                return "Bienvenido ADMIN<br/>";
             }
             else
             {
                 foreach ($l as $t) 
                 {
-                    //$t->_ToString();
-                    if(strcmp($t->_nombre, $u->_nombre) ==0 && strcmp($t->_clave, $u->_clave) ==0)
+                    if(strcmp($t->_nombre, $u->_nombre) ==0 
+                    && strcmp($t->_clave, $u->_clave) ==0)
                     {
                         return "Verificado!";
                     }
@@ -116,8 +118,7 @@ class usuario
                     if(strcmp($t->_mail, $u->_mail) !=0)
                     {
                         return "Usuario no registrado!";
-                    }  
-                    
+                    }   
                 }
                 //var_dump($t);
             }

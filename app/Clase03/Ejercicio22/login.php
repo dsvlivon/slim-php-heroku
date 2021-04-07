@@ -21,7 +21,7 @@
     $m = $_POST["mail"];
 
     $nuevoUsuario = new usuario($n, $c, $m);
-
+    //$nuevoUsuario->_ToString();
     echo usuario::_validarUsuario($nuevoUsuario);
     
 ?>
