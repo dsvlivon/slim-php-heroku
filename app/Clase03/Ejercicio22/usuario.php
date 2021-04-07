@@ -86,42 +86,37 @@ class usuario
     
     static function _validarUsuario($u)
     {
-        $key = "1234";
+        $key = "guismo";
         $root = "admin";
                 
         //$u->_ToString();        
         if($u->_nombre!=null && $u->_mail!=null && $u->_clave!=null)
         {            
-            $l = array();
-            $l = usuario::_CargaLista("usuarios.csv");
-            //usuario::_ImprimirLista($l);
-            //$u->_ToString();
-            if(strcmp($u->_nombre, $root) ==0 && strcmp($u->_clave, $key)==0)
+            if($u->_nombre == $root && $u->_clave == $key) 
             {
                 return "Bienvenido ADMIN!<br/>";
-            }
+            } 
             else
-            {
+            {              
+                $l = array();
+                $l = usuario::_CargaLista("usuarios.csv");
+                //usuario::_ImprimirLista($l);
+                //$u->_ToString();                
                 foreach ($l as $t) 
                 {
-                    //$t->_ToString();
-                    if(strcmp($t->_nombre, $u->_nombre) ==0 && strcmp($t->_clave, $u->_clave) ==0)
+                    if($u->_nombre == $t->_nombre && $u->_clave == $t->_clave) 
                     {
-                        return "Verificado!";
-                    }
-                    if(strcmp($t->_clave, $u->_clave) !=0)
+                        echo $t->_nombre."   /   ".$u->_nombre."<br>";
+                        echo $t->_clave."   /   ".$u->_clave."<br>";
+                        echo $t->_mail."   /   ".$u->_mail."<br>";
+                        return "<br>VERIFICADO";                   
+                    }                    
+                    if($u->_clave != $t->_clave)
                     {
-                        return "Error en los datos!";
-                    } 
-                    if(strcmp($t->_mail, $u->_mail) !=0)
-                    {
-                        return "Usuario no registrado!";
-                    }  
-                    
-                }
-                //var_dump($t);
+                        return "<br>ERROR EN LOS DATOS!";
+                    }               
+                }                
             }
-            return "que carajo!?!";
         }
         else
         {
