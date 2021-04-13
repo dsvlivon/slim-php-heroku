@@ -1,4 +1,4 @@
-buscar info sobre json_code y json decode
+ buscar info sobre json_code y json decode
 
 "la foto la subis al postman, cuando haces un request via post. vos podes estableces en las key si el campo es de tipo texto o un archivo"
 con multifile o formdata-> googlear

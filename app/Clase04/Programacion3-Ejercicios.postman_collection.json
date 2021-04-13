@@ -1,0 +1,577 @@
+{
+	"info": {
+		"_postman_id": "a5750f2e-3ad9-4513-9edb-1ddd6feabc57",
+		"name": "Programacion3-Ejercicios",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Clase03",
+			"item": [
+				{
+					"name": "heroku",
+					"item": [
+						{
+							"name": "ej20_heroku Verif",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "nombre",
+											"value": "ana",
+											"type": "text"
+										},
+										{
+											"key": "clave",
+											"value": "1234",
+											"type": "text"
+										},
+										{
+											"key": "mail",
+											"value": "ana@utn",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "https://vizgarradaniel.herokuapp.com/Clase03/Ejercicio20/destino.php",
+									"protocol": "https",
+									"host": [
+										"vizgarradaniel",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"Clase03",
+										"Ejercicio20",
+										"destino.php"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "ej21_heroku listado",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "nombre",
+											"value": "daniel",
+											"type": "text"
+										},
+										{
+											"key": "clave",
+											"value": "1234",
+											"type": "text"
+										},
+										{
+											"key": "mail",
+											"value": "daniel@utn",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "https://vizgarradaniel.herokuapp.com/Clase03/Ejercicio21/listado.php",
+									"protocol": "https",
+									"host": [
+										"vizgarradaniel",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"Clase03",
+										"Ejercicio21",
+										"listado.php"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "ej22_heroku Verif",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "nombre",
+											"value": "carla",
+											"type": "text"
+										},
+										{
+											"key": "clave",
+											"value": "1234",
+											"type": "text"
+										},
+										{
+											"key": "mail",
+											"value": "carla@utn",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost/Clase03/destino.php?nombre=daniel&mail=daniel@utn&clave=123",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"Clase03",
+										"destino.php"
+									],
+									"query": [
+										{
+											"key": "nombre",
+											"value": "daniel"
+										},
+										{
+											"key": "mail",
+											"value": "daniel@utn"
+										},
+										{
+											"key": "clave",
+											"value": "123"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "ej22_heroku error-clave",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "nombre",
+											"value": "carla",
+											"type": "text"
+										},
+										{
+											"key": "clave",
+											"value": "12345",
+											"description": "deberia ser 1234 y x eso esta mal",
+											"type": "text"
+										},
+										{
+											"key": "mail",
+											"value": "carla@utn",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "https://vizgarradaniel.herokuapp.com/Clase03/Ejercicio22/login.php",
+									"protocol": "https",
+									"host": [
+										"vizgarradaniel",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"Clase03",
+										"Ejercicio22",
+										"login.php"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "localhost",
+					"item": [
+						{
+							"name": "ej20_localhost Verif",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "nombre",
+											"value": "julio",
+											"type": "text"
+										},
+										{
+											"key": "clave",
+											"value": "1234",
+											"type": "text"
+										},
+										{
+											"key": "mail",
+											"value": "julio@utn",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost/slim-php-heroku/app/Clase03/Ejercicio20/destino.php",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"slim-php-heroku",
+										"app",
+										"Clase03",
+										"Ejercicio20",
+										"destino.php"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "ej22_localhost Verif",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "nombre",
+											"value": "daniel",
+											"type": "text"
+										},
+										{
+											"key": "clave",
+											"value": "1234",
+											"type": "text"
+										},
+										{
+											"key": "mail",
+											"value": "daniel@utn",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost/slim-php-heroku/app/Clase03/Ejercicio22/login.php",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"slim-php-heroku",
+										"app",
+										"Clase03",
+										"Ejercicio22",
+										"login.php"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "ej21_localhost listado",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "nombre",
+											"value": "daniel",
+											"type": "text"
+										},
+										{
+											"key": "clave",
+											"value": "1234",
+											"type": "text"
+										},
+										{
+											"key": "mail",
+											"value": "daniel@utn",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost/slim-php-heroku/app/Clase03/Ejercicio21/listado.php",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"slim-php-heroku",
+										"app",
+										"Clase03",
+										"Ejercicio21",
+										"listado.php"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "ej22_localhost error-clave",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "nombre",
+											"value": "daniel",
+											"type": "text"
+										},
+										{
+											"key": "clave",
+											"value": "1234a",
+											"type": "text"
+										},
+										{
+											"key": "mail",
+											"value": "daniel@utn",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost/slim-php-heroku/app/Clase03/Ejercicio22/login.php",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"slim-php-heroku",
+										"app",
+										"Clase03",
+										"Ejercicio22",
+										"login.php"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Clase04",
+			"item": [
+				{
+					"name": "localhost",
+					"item": [
+						{
+							"name": "e23_localhost save",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "foto",
+											"type": "file",
+											"src": "/C:/xampp/htdocs/slim-php-heroku/app/Clase04/Ejercicio23/pic.jpg"
+										},
+										{
+											"key": "nombre",
+											"value": "coco",
+											"type": "text"
+										},
+										{
+											"key": "mail",
+											"value": "coco@utn",
+											"type": "text"
+										},
+										{
+											"key": "clave",
+											"value": "1234",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost/slim-php-heroku/app/Clase04/Ejercicio23/registro.php",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"slim-php-heroku",
+										"app",
+										"Clase04",
+										"Ejercicio23",
+										"registro.php"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "e24_localhost listado",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "nombre",
+											"value": "daniel",
+											"type": "text"
+										},
+										{
+											"key": "clave",
+											"value": "1234",
+											"type": "text"
+										},
+										{
+											"key": "mail",
+											"value": "daniel@utn",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "https://vizgarradaniel.herokuapp.com/Clase03/Ejercicio21/listado.php",
+									"protocol": "https",
+									"host": [
+										"vizgarradaniel",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"Clase03",
+										"Ejercicio21",
+										"listado.php"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "heroku",
+					"item": [
+						{
+							"name": "e23_heroku save",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "foto",
+											"type": "file",
+											"src": "/C:/xampp/htdocs/slim-php-heroku/app/Clase04/Ejercicio23/pic.jpg"
+										},
+										{
+											"key": "nombre",
+											"value": "coco",
+											"type": "text"
+										},
+										{
+											"key": "mail",
+											"value": "coco@utn",
+											"type": "text"
+										},
+										{
+											"key": "clave",
+											"value": "1234",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://vizgarradaniel.herokuapp.com/Clase04/Ejercicio23/registro.php",
+									"protocol": "http",
+									"host": [
+										"vizgarradaniel",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"Clase04",
+										"Ejercicio23",
+										"registro.php"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "e24_heroku listado",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "nombre",
+											"value": "daniel",
+											"type": "text"
+										},
+										{
+											"key": "clave",
+											"value": "1234",
+											"type": "text"
+										},
+										{
+											"key": "mail",
+											"value": "daniel@utn",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "https://vizgarradaniel.herokuapp.com/Clase03/Ejercicio21/listado.php",
+									"protocol": "https",
+									"host": [
+										"vizgarradaniel",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"Clase03",
+										"Ejercicio21",
+										"listado.php"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}

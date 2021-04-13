@@ -9,14 +9,16 @@ class usuario
     public $_fecha;
     public $_id;
     
-    public function __construct($n,$c,$m)
+    public function __construct($n,$c,$m,$f,$i)
     {
         $this->_nombre = $n;
         $this->_clave = $c;
-        $this->_mail = $m;        
-    }        
+        $this->_mail = $m;
+        $this->_fecha = $f;
+        $this->_id = $i;
+    }    
 
-    static function _CargaLista($archivo)
+    static function _CargaListaCSV($archivo)
     {
         $listaU=array();
         if($archivo!=null)
@@ -64,19 +66,18 @@ class usuario
         }
     }
 
-    static function _PersistirCsv($u)
+    static function _PersistirCsv($u, $a)
     {
         if($u->_nombre!=null && $u->_mail!=null && $u->_clave!=null)
         {
             $l = array();
-            $l = usuario::_CargaLista("usuarios.csv");
+            $l = usuario::_CargaLista($a);
             foreach ($l as $t) 
             {
                 if($t->_nombre != $u->_nombre && $t->_clave != $u->_clave && $t->_mail != $u->_mail)
                 {
-                    $msg = "\n".$u->_nombre.",".$u->_mail.",".$u->_fecha.$u->_id.";";
-                    archivos::_GuardarCsv($msg);
-                    echo "Bienvenido nuevo usuario";
+                    $msg = "\n".$u->_nombre.",".$u->_mail.",".date("Y/m/d").";";
+                    archivos::_GuardarCsv($msg, $a);
                 }    
             }            
         }
@@ -85,8 +86,43 @@ class usuario
             echo "Faltan Datos";
         }
     }
+
+    static function _PersistirJSON($u, $a)
+    {
+        if($u->_nombre!=null && $u->_mail!=null && $u->_clave!=null && $u->_fecha!=null && $u->_id!=null)
+        {
+            $l = array();     
+            $msg = json_encode($u);
+            //echo $msg;
+            archivos::_GuardarJSON($msg, $a);
+        }
+        else
+        {
+            echo "Faltan Datos";
+        }
+    }
+
+    /*static function _GenerarId()
+    {
+        $l = array();
+        $l = usuario::_CargaLista("usuarios.csv");
+
+        for($i=0, $i<count($l),$i++) 
+        {
+            if(l[$i]._id==0)
+            {
+                if(l[$i]._id < l[$i+1]._id)
+                {
+                    
+                }
+            }    
+            else{$id=0;}
+        }
     
-    static function _validarUsuario($u)
+        return $id;
+    }*/
+    
+    static function _validarUsuario($u, $a)
     {
         $key = "1234";
         $root = "admin";
@@ -95,7 +131,7 @@ class usuario
         if($u->_nombre!=null && $u->_mail!=null && $u->_clave!=null)
         {            
             $l = array();
-            $l = usuario::_CargaLista("usuarios.csv");
+            $l = usuario::_CargaLista($a);
             //usuario::_ImprimirLista($l);
             //$u->_ToString();
             if(strcmp($u->_nombre, $root) ==0 && strcmp($u->_clave, $key)==0)
