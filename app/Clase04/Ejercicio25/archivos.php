@@ -36,15 +36,18 @@ class archivos
         
         if($archivo!=null)
         {
-            $p = fopen($archivo, "r");
-            while(!feof($p))
+            if(file_exists($archivo))
             {
-                $linea = fgets($p);
-                //$vec = fgetcsv($p,200,",","\n");
-                array_push($vec, $linea);      
-                fclose($p);
+                $p = fopen($archivo, "r");
+                while(!feof($p))
+                {
+                    $linea = fgets($p);
+                    //$vec = fgetcsv($p,200,",","\n");
+                    array_push($vec, $linea);      
+                    fclose($p);
+                }
+                return $vec;
             }
-            return $vec;
         }
         else
         {
@@ -66,8 +69,6 @@ class archivos
                 fseek($p, filesize($archivo)-1);
                 fwrite($p, ",".$m."]");
             }
-            //[{"_nombre":"fede","_clave":"1234","_mail":"fede@utn","_fecha":"2021\/04\/12","_id":1857},
-            //{"_nombre":"daniel","_clave":"1234","_mail":"daniel@utn","_fecha":"2021\/04\/12","_id":8078}]   
             fclose($p);              
             echo "Datos Guardados!";
             return true;     
@@ -79,16 +80,47 @@ class archivos
         }
     }
 
+    static function _GuardarArray($l,$archivo)
+    {      
+        if($l!=null)
+        {
+            $pudo = 0;    
+            $file = fopen($archivo, "w");
+            $pudo = fwrite($file, json_encode($l));
+            fclose($file);    
+            return $pudo;        //GRACIAS JOSIAS XQ NO M SALIA
+        }          
+        else
+        {
+            echo "Error al guardar Datos!";
+            return false;
+        }            
+        //     $p = fopen($archivo, "w");
+        //     fwrite($p,"[");            
+        //     for($i=0; $i < count($l)-1; $i++)
+        //     {
+        //         $msg = json_encode($l[$i]);
+        //         if($i<count($l)-1){
+        //             fwrite($p, $msg.",");
+        //         }
+        //         else{
+        //             fwrite($p, $msg);
+        //         }
+    }
+
     static function _CargarJSON($archivo)
     {
         $vec = array();    
         if($archivo!=null)
         {
-            $p = fopen($archivo, "r");
-            $contenido = fread($p, filesize($archivo));
-            $vec = json_decode($contenido);
-            fclose($p);
-            return $vec;
+            if(file_exists($archivo))
+            {
+                $p = fopen($archivo, "r");
+                $contenido = fread($p, filesize($archivo));
+                $vec = json_decode($contenido);
+                fclose($p);
+                return $vec;
+            }
         }
         else
         {
