@@ -696,6 +696,78 @@
 					]
 				}
 			]
+		},
+		{
+			"name": "Clase05",
+			"item": [
+				{
+					"name": "localhost",
+					"item": [
+						{
+							"name": "e27_localhost alta",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "apellido",
+											"value": "Bart",
+											"type": "text"
+										},
+										{
+											"key": "nombre",
+											"value": "Simpson",
+											"type": "text"
+										},
+										{
+											"key": "mail",
+											"value": "bsimpson@utn",
+											"type": "text"
+										},
+										{
+											"key": "tipo",
+											"value": "1234",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "localidad",
+											"value": "Springfield",
+											"type": "text"
+										},
+										{
+											"key": "clave",
+											"value": "1234",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost/slim-php-heroku/app/Clase04/Ejercicio25/altaProducto.php",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"slim-php-heroku",
+										"app",
+										"Clase04",
+										"Ejercicio25",
+										"altaProducto.php"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "heroku",
+					"item": []
+				}
+			]
 		}
 	]
 }

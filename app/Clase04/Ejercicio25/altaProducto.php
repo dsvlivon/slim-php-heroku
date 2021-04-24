@@ -23,10 +23,8 @@ $s = $_POST["stock"];
 $p = $_POST["precio"];
 $i = rand(0,10000);
 
-
 $prod = new producto($c,$n,$t,$s,$p,$i);
 
 producto::_validarProducto($prod, "productos.json");
-
 
 ?>
