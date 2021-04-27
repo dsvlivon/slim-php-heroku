@@ -972,7 +972,59 @@
 							"response": []
 						},
 						{
-							"name": "e30_heroku alta",
+							"name": "e32_localhost modificarusuario",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "apellido",
+											"value": "Bart",
+											"type": "text"
+										},
+										{
+											"key": "nombre",
+											"value": "Simpson",
+											"type": "text"
+										},
+										{
+											"key": "mail",
+											"value": "bsimpson@utn",
+											"type": "text"
+										},
+										{
+											"key": "localidad",
+											"value": "Springfield",
+											"type": "text"
+										},
+										{
+											"key": "clave",
+											"value": "1234",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost/slim-php-heroku/app/Clase05/Ejercicio27/altaProducto.php",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"slim-php-heroku",
+										"app",
+										"Clase05",
+										"Ejercicio27",
+										"altaProducto.php"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "e30_localhost alta",
 							"request": {
 								"method": "POST",
 								"header": [],
@@ -988,12 +1040,6 @@
 											"key": "nombre",
 											"value": "camarita",
 											"type": "text"
-										},
-										{
-											"key": "mail",
-											"value": "coco@utn",
-											"type": "text",
-											"disabled": true
 										},
 										{
 											"key": "tipo",
@@ -1013,13 +1059,76 @@
 									]
 								},
 								"url": {
-									"raw": "https:///vizgarradaniel.herokuapp.com/Clase04/Ejercicio25/altaProducto.php",
+									"raw": "https://localhost/slim-php-heroku/app/Clase05/Ejercicio30/altaProducto.php",
 									"protocol": "https",
+									"host": [
+										"localhost"
+									],
 									"path": [
-										"vizgarradaniel.herokuapp.com",
-										"Clase04",
-										"Ejercicio25",
+										"slim-php-heroku",
+										"app",
+										"Clase05",
+										"Ejercicio30",
 										"altaProducto.php"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "e31_localhost venta",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "codigo",
+											"value": "77900362",
+											"type": "text"
+										},
+										{
+											"key": "cantidad",
+											"value": "4",
+											"type": "text"
+										},
+										{
+											"key": "id",
+											"value": "106",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost/slim-php-heroku/app/Clase04/Ejercicio26/RealizarVenta.php",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"slim-php-heroku",
+										"app",
+										"Clase04",
+										"Ejercicio26",
+										"RealizarVenta.php"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": "",
+											"disabled": true
+										},
+										{
+											"key": "",
+											"value": "",
+											"disabled": true
+										},
+										{
+											"key": "",
+											"value": "",
+											"disabled": true
+										}
 									]
 								}
 							},
