@@ -5,17 +5,20 @@ include "usuario.php";
 
 class venta
 {   
-    public $_codigoProducto;
-    public $_cantidad;
-    public $_idUsuario;
-    public $_idVenta;
+    public $codigoProducto;
+    public $cantidad;
+    public $idUsuario;
+    public $idVenta;
 
-    public function __construct($c, $q, $u, $v)
+    
+    public function __construct(){}
+    
+    public function _setVenta($c, $q, $u, $v)
     {
-        $this->_codigoProducto = $c;
-        $this->_cantidad = $q;
-        $this->_idUsuario = $u;
-        $this->_idVenta = $v;
+        $this->codigoProducto = $c;
+        $this->cantidad = $q;
+        $this->idUsuario = $u;
+        $this->idVenta = $v;
     }
 
 
@@ -29,24 +32,23 @@ class venta
         $listaUsuarios = usuario::_CargarListaJSON($aUsuarios);
         $listaProductos = producto::_CargarListaJSON($aProductos);
 
-        $flag = usuario::_VerificarUsuarioPorId($this->_idUsuari,$listaUsuarios);
-        $flag = producto::_VerificarProducto($this->_codigoProducto,$this->_cantidad,$listaProductos);
+        $flag = usuario::_VerificarUsuarioPorId($this->idUsuario,$listaUsuarios);
+        $flag = producto::_VerificarProducto($this->codigoProducto,$this->cantidad,$listaProductos);
 
         if($flag == true)
         {
             foreach ($listaProductos as $item) 
             {
-                if($this->_codigoProducto == $item->_codigo)
+                if($this->codigoProducto == $item->codigo)
                 {
-                    $item->_stock-=$this->_cantidad;
+                    $item->stock-=$this->cantidad;
                 }
             }
             archivos::_GuardarArray($listaProductos,"productos.json");
             array_push($listaVentas, $this);
             return "venta realizada";//Se hizo una venta
         }
-        return "no se pudo hacer";//“si no se pudo hacer
-      
+        return "no se pudo hacer";//“si no se pudo hacer      
     }    
     
     static function _CargarListaJSON($archivo)
@@ -59,10 +61,10 @@ class venta
             {
                 foreach ($contenido as $item) 
                 {       
-                    $c = $item->_codigoProducto;
-                    $q = $item->_cantidad;
-                    $u = $item->_idUsuario;
-                    $v = $item->_idVenta;
+                    $c = $item->codigoProducto;
+                    $q = $item->cantidad;
+                    $u = $item->idUsuario;
+                    $v = $item->idVenta;
                     $obj = new  venta($c,$q,$u,$v);
                     array_push($lista, $obj);
                 }

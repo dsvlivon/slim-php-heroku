@@ -867,6 +867,163 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "e28_localhost listado",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "nombre",
+											"value": "daniel",
+											"type": "text"
+										},
+										{
+											"key": "clave",
+											"value": "1234",
+											"type": "text"
+										},
+										{
+											"key": "mail",
+											"value": "daniel@utn",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost/slim-php-heroku/app/Clase05/Ejercicio28/listado.php?listado=usuarios.json",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"slim-php-heroku",
+										"app",
+										"Clase05",
+										"Ejercicio28",
+										"listado.php"
+									],
+									"query": [
+										{
+											"key": "listado",
+											"value": "usuarios.json"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "e29_localhost login",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "apellido",
+											"value": "Bart",
+											"type": "text"
+										},
+										{
+											"key": "nombre",
+											"value": "Simpson",
+											"type": "text"
+										},
+										{
+											"key": "mail",
+											"value": "bsimpson@utn",
+											"type": "text"
+										},
+										{
+											"key": "localidad",
+											"value": "Springfield",
+											"type": "text"
+										},
+										{
+											"key": "clave",
+											"value": "1234",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost/slim-php-heroku/app/Clase05/Ejercicio27/altaProducto.php",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"slim-php-heroku",
+										"app",
+										"Clase05",
+										"Ejercicio27",
+										"altaProducto.php"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "e30_heroku alta",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "codigo",
+											"value": "1210",
+											"type": "text"
+										},
+										{
+											"key": "nombre",
+											"value": "camarita",
+											"type": "text"
+										},
+										{
+											"key": "mail",
+											"value": "coco@utn",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "tipo",
+											"value": "1234",
+											"type": "text"
+										},
+										{
+											"key": "stock",
+											"value": "5",
+											"type": "text"
+										},
+										{
+											"key": "precio",
+											"value": "1234",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "https:///vizgarradaniel.herokuapp.com/Clase04/Ejercicio25/altaProducto.php",
+									"protocol": "https",
+									"path": [
+										"vizgarradaniel.herokuapp.com",
+										"Clase04",
+										"Ejercicio25",
+										"altaProducto.php"
+									]
+								}
+							},
+							"response": []
 						}
 					]
 				},

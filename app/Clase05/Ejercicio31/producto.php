@@ -12,11 +12,7 @@ class producto
     public $fechaDeCreacion;
     public $ultimaModificacion;
     //id,codigo,nombre,tipo,stock,precio,fechaDeCreacion,ultimamodificacion
-
-    public function __construct()
-    {
-        
-    }
+    public function __construct(){}
      
     #region Propias
     public function _setProducto($c,$n,$t,$s,$p)
@@ -30,6 +26,27 @@ class producto
         //$this->fechaDeCreacion = $f;
         //$this->ultimaModificacion = $u;
     } 
+
+    static  function _SetCodigo($c)
+    {
+        if(strlen($c)==6)
+        {
+            return $c;
+        } 
+        return false;
+    }
+
+    static function _VerificarExistencia($id, $cantidad, $lista)
+    {
+        foreach ($lista as $item) 
+        {
+            if($item->id == $id && $item->stock >=$cantidad)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 
     static function _validarProducto($obj, $l)
     {

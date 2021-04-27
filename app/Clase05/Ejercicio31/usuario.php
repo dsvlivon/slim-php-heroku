@@ -12,13 +12,9 @@ class usuario
     public $id;
     public $localidad;
     //nombre,apellido,clave,mail,feReg,id,localidad
+    public function __construct(){}
     
     #region Propias
-    public function __construct()
-    {
-
-    }
-    
     public function _setUsuario($i, $n, $a, $c, $m, $f, $l)
     { 
         $this->id = $i;
@@ -100,6 +96,18 @@ class usuario
             return "Faltan datos!";
         }
     }   
+
+    static function _VerificarUsuarioPorId($id,$lista)
+    {
+        foreach ($lista as $item) 
+        {
+            if($item->id == $id)
+            {
+                return true;
+            }
+            return false;
+        }
+    }
 
     public function _ToString()
     {//nombre apellido clave mail feReg localidad
