@@ -428,6 +428,57 @@
 							"response": []
 						},
 						{
+							"name": "e24_localhost listado",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "nombre",
+											"value": "daniel",
+											"type": "text"
+										},
+										{
+											"key": "clave",
+											"value": "1234",
+											"type": "text"
+										},
+										{
+											"key": "mail",
+											"value": "daniel@utn",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost/slim-php-heroku/app/Clase04/Ejercicio24/listado.php?listado=usuarios.json",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"slim-php-heroku",
+										"app",
+										"Clase04",
+										"Ejercicio24",
+										"listado.php"
+									],
+									"query": [
+										{
+											"key": "listado",
+											"value": "usuarios.json"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
 							"name": "e25_localhost alta",
 							"request": {
 								"method": "POST",
@@ -486,35 +537,32 @@
 							"response": []
 						},
 						{
-							"name": "e24_localhost listado",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
+							"name": "e26_localhost venta",
 							"request": {
-								"method": "GET",
+								"method": "POST",
 								"header": [],
 								"body": {
 									"mode": "formdata",
 									"formdata": [
 										{
-											"key": "nombre",
-											"value": "daniel",
+											"key": "codigo",
+											"value": "77900362",
 											"type": "text"
 										},
 										{
-											"key": "clave",
-											"value": "1234",
+											"key": "cantidad",
+											"value": "4",
 											"type": "text"
 										},
 										{
-											"key": "mail",
-											"value": "daniel@utn",
+											"key": "id",
+											"value": "106",
 											"type": "text"
 										}
 									]
 								},
 								"url": {
-									"raw": "http://localhost/slim-php-heroku/app/Clase04/Ejercicio24/listado.php?listado=usuarios.json",
+									"raw": "http://localhost/slim-php-heroku/app/Clase04/Ejercicio26/RealizarVenta.php",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -523,13 +571,24 @@
 										"slim-php-heroku",
 										"app",
 										"Clase04",
-										"Ejercicio24",
-										"listado.php"
+										"Ejercicio26",
+										"RealizarVenta.php"
 									],
 									"query": [
 										{
-											"key": "listado",
-											"value": "usuarios.json"
+											"key": "",
+											"value": "",
+											"disabled": true
+										},
+										{
+											"key": "",
+											"value": "",
+											"disabled": true
+										},
+										{
+											"key": "",
+											"value": "",
+											"disabled": true
 										}
 									]
 								}
@@ -692,6 +751,60 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "e26_heroku venta",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "codigo",
+											"value": "1210",
+											"type": "text"
+										},
+										{
+											"key": "nombre",
+											"value": "camarita",
+											"type": "text"
+										},
+										{
+											"key": "mail",
+											"value": "coco@utn",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "codigo",
+											"value": "77900362",
+											"type": "text"
+										},
+										{
+											"key": "cantidad",
+											"value": "4",
+											"type": "text"
+										},
+										{
+											"key": "id",
+											"value": "106",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "https:///vizgarradaniel.herokuapp.com/Clase04/Ejercicio26/RealizaVenta.php",
+									"protocol": "https",
+									"path": [
+										"vizgarradaniel.herokuapp.com",
+										"Clase04",
+										"Ejercicio26",
+										"RealizaVenta.php"
+									]
+								}
+							},
+							"response": []
 						}
 					]
 				}
@@ -704,7 +817,7 @@
 					"name": "localhost",
 					"item": [
 						{
-							"name": "e27_localhost alta",
+							"name": "e27_localhost registro",
 							"request": {
 								"method": "POST",
 								"header": [],
@@ -727,12 +840,6 @@
 											"type": "text"
 										},
 										{
-											"key": "tipo",
-											"value": "1234",
-											"type": "text",
-											"disabled": true
-										},
-										{
 											"key": "localidad",
 											"value": "Springfield",
 											"type": "text"
@@ -745,7 +852,7 @@
 									]
 								},
 								"url": {
-									"raw": "http://localhost/slim-php-heroku/app/Clase04/Ejercicio25/altaProducto.php",
+									"raw": "http://localhost/slim-php-heroku/app/Clase05/Ejercicio27/altaProducto.php",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -753,8 +860,8 @@
 									"path": [
 										"slim-php-heroku",
 										"app",
-										"Clase04",
-										"Ejercicio25",
+										"Clase05",
+										"Ejercicio27",
 										"altaProducto.php"
 									]
 								}

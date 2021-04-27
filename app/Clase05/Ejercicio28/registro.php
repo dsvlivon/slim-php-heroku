@@ -12,12 +12,20 @@ retorna si se pudo agregar o no.
 **************************/
 include "usuario.php";
    
-    $u = new usuario($_POST["nombre"], $_POST["apellido"], $_POST["clave"], $_POST["mail"],date("Y/m/d"), $_POST["localidad"]);
-    //nombre apellido clave mail feReg localidad
-    $u->_ToString();
-    //var_dump($u);
-    
-    $resultado = $u->_InsertaUno();
+
+    $n = $_POST["nombre"]; 
+    $a = $_POST["apellido"]; 
+    $c = $_POST["clave"];
+    $m = $_POST["mail"];
+    $d = date("Y/m/d"); 
+    $l = $_POST["localidad"];
+
+    //si el usuario ya existe, dame el id
+    //si el usuario no existe, encontrar un id disponible y retornar
+    $obj = new usuario();//
+    $obj->_dummy($n,$a,$c,$m,$d,$l);
+    //$u = new usuario($_POST["nombre"], $_POST["apellido"], $_POST["clave"], $_POST["mail"],date("Y/m/d"), $_POST["localidad"]);
+    $resultado = $obj->_PersistirDB();
     if($resultado>0)
     {
         echo "el id del usuario insertado es: ".$resultado;

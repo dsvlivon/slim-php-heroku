@@ -15,7 +15,7 @@
     switch($a)
     {
         case "usuarios.json":
-            $l = usuario::_TraerTodos();            
+            $l = usuario::_SelectAll();            
             usuario::_ImprimirLista($l);            
         break;
         case "productos.json":
@@ -25,7 +25,11 @@
         default:
         break;
     }
-   
+    $l = array();
+    $l = usuario::_CargaListaJson("usuarios.json");
+       
+    echo usuario::_ImprimirLista($l);
+    
    
     
 ?>

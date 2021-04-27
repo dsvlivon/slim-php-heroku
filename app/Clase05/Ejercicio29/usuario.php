@@ -13,31 +13,55 @@ class usuario
     public $_localidad;
     
     #region Propias
-    public function __construct()
+    public function __construct(){}
+    
+    public function _usuarioConId($i, $n, $a, $c, $m, $f, $l)
+    { 
+        $this->_id = $i;
+        $this->_nombre = $n;
+        $this->_apellido = $a;
+        $this->_clave = $c;
+        $this->_mail = $m;
+        $this->_feReg = $f;
+        $this->_localidad=$l;
+    }    
+    
+    public function _usuario($n, $a, $c, $m, $f, $l)
     {
-
+        $this->_nombre = $n;
+        $this->_apellido = $a;
+        $this->_clave = $c;
+        $this->_mail = $m;
+        $this->_feReg = $f;
+        $this->_localidad=$l;
     }
-    
-    // public function _usuarioConId($i, $n, $a, $c, $m, $f, $l)
-    // { 
-    //     $this->_id = $i;
-    //     $this->_nombre = $n;
-    //     $this->_apellido = $a;
-    //     $this->_clave = $c;
-    //     $this->_mail = $m;
-    //     $this->_feReg = $f;
-    //     $this->_localidad=$l;
-    // }    
-    
-    // public function _usuario($n, $a, $c, $m, $f, $l)
-    // {
-    //     $this->_nombre = $n;
-    //     $this->_apellido = $a;
-    //     $this->_clave = $c;
-    //     $this->_mail = $m;
-    //     $this->_feReg = $f;
-    //     $this->_localidad=$l;
-    // }
+
+    public static function _validarLogin($m, $c, $l)
+    {
+        if($m!=null && $c!=null && $l!=null)
+        {
+            foreach ($l as $item) 
+            {
+                if($item->_mail == $m && $item->_clave == $c)
+                {
+                    return "Verificado";
+                }
+                if($item->_mail == $m && $item->_clave != $c) 
+                {
+                    return "Error en los datos";
+                }
+                if($item->_mail != $m && $item->_clave == $c) 
+                {
+                    return "Usuario no registrado";
+                }
+                else
+                {
+                    return "Error!";
+                }
+            }
+        }
+    }
+
     static function _validarUsuario($obj, $a)
     {
         $key = "1234";
@@ -58,8 +82,6 @@ class usuario
             {
                 foreach ($l as $item) 
                 {   
-                    if($item->_nombre== $obj->_nombre)
-
                     if(strcmp($item->_nombre, $obj->_nombre) ==0 
                     && strcmp($item->_clave, $obj->_clave) ==0)
                     {
@@ -124,18 +146,17 @@ class usuario
     }    
     #endregion
     #region DB
-    public static function _TraerTodos()//NO FUNCA
+    public static function _SelectAll()//NO FUNCA
     {
         $l = array();
         $objetoAccesoDato = archivo::dameUnObjetoAcceso(); 
-        $consulta =$objetoAccesoDato->RetornarConsulta("SELECT id AS _id,nombre AS _nombre,apellido AS _apellido, mail AS _mail, clave AS _clave FROM personas");
+        $consulta =$objetoAccesoDato->RetornarConsulta("SELECT * from personas");
         $consulta->execute();			
         $l = $consulta->fetchAll(PDO::FETCH_CLASS, "usuario");
         return $l;
-        //var_dump($l);
 	}
 
-    public function _PersistirDB()
+    public function _Insert()
 	{//nombre apellido clave mail feReg localidad
         $objetoAccesoDato = archivo::dameUnObjetoAcceso(); 
         $consulta =$objetoAccesoDato->RetornarConsulta("INSERT into personas 
@@ -150,6 +171,8 @@ class usuario
         $consulta->execute();		
         return $objetoAccesoDato->RetornarUltimoIdInsertado();
     }
+
+    
     #endregion
     #region JSON
     static function _PersistirJSON($obj, $a)

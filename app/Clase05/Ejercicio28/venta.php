@@ -17,7 +17,8 @@ class venta
         $this->_idUsuario = $u;
         $this->_idVenta = $v;
     }
-   
+
+
     public function _Vender($aUsuarios, $aProductos)
     {
         $flag = false;

@@ -31,12 +31,10 @@ class AccesoDatos
             self::$ObjetoAccesoDatos = new AccesoDatos(); 
         } 
         return self::$ObjetoAccesoDatos;        
-    }
- 
- 
-     // Evita que el objeto se pueda clonar
+    } 
+     
     public function __clone()
-    { 
+    {// Evita que el objeto se pueda clonar 
         trigger_error('La clonación de este objeto no está permitida', E_USER_ERROR); 
     }
 }

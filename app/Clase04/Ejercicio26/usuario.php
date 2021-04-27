@@ -1,5 +1,5 @@
 <?php
-include "archivos.php";
+include "archivo.php";
 
 class usuario
 {
@@ -17,13 +17,13 @@ class usuario
         $this->_fecha = $f;
         $this->_id = $i;
     }    
-
+    #region CSV
     static function _CargaListaCSV($archivo)
     {
-        $listaU=array();
+        $lista=array();
         if($archivo!=null)
         {
-            $lineas = archivos::_CargarCsv($archivo);
+            $lineas = archivo::_CargarCsv($archivo);
             if($lineas!=null)
             {
                 for ($i=0; $i <count($lineas) ; $i++) 
@@ -32,14 +32,14 @@ class usuario
                     $n = $ats[0];
                     $m = $ats[1];
                     $c = $ats[2];
-                    $u = new  usuario($n,$c,$m);
-                    array_push($listaU, $u);
+                    $obj = new  usuario($n,$c,$m);
+                    array_push($lista, $obj);
                 }
             }
         }
-        return $listaU;
+        return $lista;
     }   
-
+    
     static function _PersistirCsv($u, $a)
     {
         if($u->_nombre!=null && $u->_mail!=null && $u->_clave!=null)
@@ -51,7 +51,7 @@ class usuario
                 if($t->_nombre != $u->_nombre && $t->_clave != $u->_clave && $t->_mail != $u->_mail)
                 {
                     $msg = "\n".$u->_nombre.",".$u->_mail.",".date("Y/m/d").";";
-                    archivos::_GuardarCsv($msg, $a);
+                    archivo::_GuardarCsv($msg, $a);
                 }    
             }            
         }
@@ -60,7 +60,8 @@ class usuario
             echo "Faltan Datos";
         }
     }
-    
+    #endregion
+    #region JSON
     static function _PersistirJSON($u, $a)
     {
         if($u->_nombre!=null && $u->_mail!=null && $u->_clave!=null && $u->_fecha!=null && $u->_id!=null)
@@ -68,7 +69,7 @@ class usuario
             $l = array();     
             $msg = json_encode($u);
             //echo $msg;
-            archivos::_GuardarJSON($msg, $a);
+            archivo::_GuardarJSON($msg, $a);
         }
         else
         {
@@ -76,12 +77,12 @@ class usuario
         }
     }
 
-    static function _CargaListaJSON($archivo)
+    static function _CargarListaJSON($archivo)
     {
         $lista=array();
         if($archivo!=null)
         {
-            $contenido = archivos::_CargarJSON($archivo);
+            $contenido = archivo::_CargarJSON($archivo);
             if($contenido!=null)
             {
                 foreach ($contenido as $item) 
@@ -98,7 +99,8 @@ class usuario
         }
         return $lista;
     }
-
+    #endregion
+    #region Propias
     static function _VerificarUsuarioPorId($id,$lista)
     {
         foreach ($lista as $item) 
@@ -110,7 +112,7 @@ class usuario
             return false;
         }
     }
-
+    
     static function _validarUsuarioPor($u, $a)
     {
         $key = "1234";
@@ -154,7 +156,7 @@ class usuario
             return "Faltan datos!";
         }
     }
-
+   
     public function _ToString()
     {
         $mensaje = "Nombre: ".$this->_nombre."<br/>"."Mail: ".$this->_mail."<br/>"."Clave: ".$this->_clave."<br/><br/>";        
@@ -186,5 +188,6 @@ class usuario
             echo "Error en la lista";
         }
     }
+     #endregion
 }
 ?>

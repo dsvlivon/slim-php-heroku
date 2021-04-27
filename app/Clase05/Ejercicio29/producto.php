@@ -3,22 +3,93 @@ include "archivo.php";
 
 class producto
 {
-    public $_nombre;
+    public $_id;
     public $_codigo;
+    public $_nombre;
     public $_tipo;
     public $_stock;
     public $_precio;
-    public $_id;
-    
-    public function __construct($c,$n,$t,$s,$p,$i)
+    public $_fechaDeCreacion;
+    public $_ultimaModificacion;
+   
+    public function __construct($i,$c,$n,$t,$s,$p,$f,$u)
     {
+        $this->_id = $i;
+        $this->_codigo = $c;  
         $this->_nombre = $n;
-        $this->_codigo = $c;
         $this->_tipo = $t;
         $this->_stock = $s;
         $this->_precio = $p;
-        $this->_id = $i;
+        $this->_fechaDeCreacion = $f;
+        $this->_ultimaModificacion = $u;
     }    
+    #region DB
+    public function _PersistirDB()
+	{//codigo nombre tipo stock precio fechaDeCreacion  ultimaModificacion
+        $objetoAccesoDato = archivo::dameUnObjetoAcceso(); 
+        $consulta =$objetoAccesoDato->RetornarConsulta("INSERT INTO productos 
+        (codigo,nombre,tipo,stock,precio,fechaDeCreacion,ultimaModificacion)
+        VALUES(:codigo,:nombre,:tipo,:stock,:precio,:fechaDeCreacion,:ultimaModificacion)");
+        $consulta->bindValue(':codigo',$this->_codigo, PDO::PARAM_STR);
+        $consulta->bindValue(':nombre',$this->_nombre, PDO::PARAM_STR);
+        $consulta->bindValue(':tipo',$this->_tipo, PDO::PARAM_STR);
+        $consulta->bindValue(':stock', $this->_stock, PDO::PARAM_INT);
+        $consulta->bindValue(':precio', $this->_precio, PDO::PARAM_STR);//no estoy seguro de este?
+        //StackOVerflow says: use PDO::PARAM_STR for all column types which are not of type int or Bool(osea q hay q reconvertirlo...)
+        $consulta->bindValue(':fechaDeCreacion', $this->_localidad, PDO::PARAM_STR);
+        $consulta->bindValue(':ultimaModificacion', $this->_localidad, PDO::PARAM_STR);
+        $consulta->execute();		
+        return $objetoAccesoDato->RetornarUltimoIdInsertado();
+    }
+
+    public function _SelectAll()
+	{
+        $objetoAccesoDato = archivo::dameUnObjetoAcceso(); 
+        $consulta =$objetoAccesoDato->RetornarConsulta("SELECT * from productos");
+        $consulta->execute();			
+        return $consulta->fetchAll(PDO::FETCH_CLASS, "producto");		
+	}
+    #endregion
+    #region JSON
+    static function _PersistirJSON($obj, $a)
+    {
+        if($obj->_codigo!= null && $obj->_id!=null)
+        {    
+            $msg = json_encode($obj);
+            //echo $msg;
+            archivo::_GuardarJSON($msg, $a);
+        }
+        else
+        {
+            echo "Faltan Datos";
+        }
+    }
+
+    static function _CargaListaJSON($a)
+    {
+        $lista=array();
+        if($a!=null)
+        {
+            $contenido = archivo::_CargarJSON($a);
+            if($contenido!=null)
+            {
+                foreach ($contenido as $item) 
+                {       
+                    $n = $item->_nombre;
+                    $c = $item->_codigo;
+                    $t = $item->_tipo;
+                    $s = $item->_stock;
+                    $p = $item->_precio;
+                    $i = $item->_id;
+                    $obj = new  producto($c,$n,$t,$s,$p,$i);
+                    //$prod = new producto($c,$n,$t,$s,$p,$i);
+                    array_push($lista, $obj);
+                }
+            }
+        }
+        return $lista;
+    }
+    #endregion
     #region CSV
     static function _CargaListaCSV($a)
     {
@@ -66,60 +137,7 @@ class producto
         }
     }
     #endregion
-    #region JSON
-    static function _PersistirJSON($obj, $a)
-    {
-        if($obj->_codigo!= null && $obj->_id!=null)
-        {    
-            $msg = json_encode($obj);
-            //echo $msg;
-            archivo::_GuardarJSON($msg, $a);
-        }
-        else
-        {
-            echo "Faltan Datos";
-        }
-    }
-
-    static function _CargaListaJSON($a)
-    {
-        $lista=array();
-        if($a!=null)
-        {
-            $contenido = archivo::_CargarJSON($a);
-            if($contenido!=null)
-            {
-                foreach ($contenido as $item) 
-                {       
-                    $n = $item->_nombre;
-                    $c = $item->_codigo;
-                    $t = $item->_tipo;
-                    $s = $item->_stock;
-                    $p = $item->_precio;
-                    $i = $item->_id;
-                    $obj = new  producto($c,$n,$t,$s,$p,$i);
-                    //$prod = new producto($c,$n,$t,$s,$p,$i);
-                    array_push($lista, $obj);
-                }
-            }
-        }
-        return $lista;
-    }
-    #endregion
     #region Propias
-    static function _VerificarProducto($codigo, $cantidad, $lista)
-    {
-        foreach ($lista as $item) 
-        {
-            if($item->_codigo == $codigo && $item->_stock >=$cantidad)
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-    //producto::_VerificarProducto($codVenta,$cantidad);
-
     static function _validarProducto($obj, $a)
     {
         if($obj->_codigo!=null && $obj->_id!=null)
@@ -143,7 +161,7 @@ class producto
                     }
                 }
                 //producto::_ImprimirLista($l);
-                archivos::_GuardarArray($l, $a);
+                archivo::_GuardarArray($l, $a);
                 echo "\nActualizado";
             }
             // echo "lista salida:\n";
@@ -202,6 +220,7 @@ class producto
         }      
         return false;
     }
+
     #endregion
 }
 ?>

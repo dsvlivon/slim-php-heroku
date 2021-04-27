@@ -1,60 +1,16 @@
 <?php
 
-class archivos
+class archivo
 {
     public $p;
 
-    static function _GuardarCsv($m, $archivo)
-    {              
-        if($m!=null)
-        {
-            if (file_exists($archivo)) 
-            {
-                $msg = "\n".$m;                
-            }
-            else
-            {
-                $msg = $m;
-            }
-            $p = fopen($archivo,"a");//con "a" agrega datos y c "w" sobreescribe  
-            fwrite($p, $msg);
-	        fclose($p);
-            echo "Datos Guardados!";
-                    
-            return true;        
-        }
-        else
-        {
-            echo "Error al guardar Datos!";
-            return false;
-        }
-    }
-   
-    static function _CargarCsv($archivo)
-    {
-        $vec = array();       
-        
-        if($archivo!=null)
-        {
-            if(file_exists($archivo))
-            {
-                $p = fopen($archivo, "r");
-                while(!feof($p))
-                {
-                    $linea = fgets($p);
-                    //$vec = fgetcsv($p,200,",","\n");
-                    array_push($vec, $linea);      
-                    fclose($p);
-                }
-                return $vec;
-            }
-        }
-        else
-        {
-            echo "Error al cargar Archivo!";
-        }
-    }
-
+    #region DB
+    //...
+    #endregion
+    #region XML
+    //...
+    #endregion
+    #region JSON
     static function _GuardarJSON($m, $archivo)
     {              
         if($m!=null)
@@ -116,6 +72,62 @@ class archivos
             echo "Error al cargar Archivo!";
         }
     }
+    #endregion
+    #region CSV
+    static function _GuardarCsv($m, $archivo)
+    {              
+        if($m!=null)
+        {
+            if (file_exists($archivo)) 
+            {
+                $msg = "\n".$m;                
+            }
+            else
+            {
+                $msg = $m;
+            }
+            $p = fopen($archivo,"a");//con "a" agrega datos y c "w" sobreescribe  
+            fwrite($p, $msg);
+	        fclose($p);
+            echo "Datos Guardados!";
+                    
+            return true;        
+        }
+        else
+        {
+            echo "Error al guardar Datos!";
+            return false;
+        }
+    }
+   
+    static function _CargarCsv($archivo)
+    {
+        $vec = array();       
+        
+        if($archivo!=null)
+        {
+            if(file_exists($archivo))
+            {
+                $p = fopen($archivo, "r");
+                while(!feof($p))
+                {
+                    $linea = fgets($p);
+                    //$vec = fgetcsv($p,200,",","\n");
+                    array_push($vec, $linea);      
+                    fclose($p);
+                }
+                return $vec;
+            }
+        }
+        else
+        {
+            echo "Error al cargar Archivo!";
+        }
+    }
+    #endregion
+    #region TXT
+    //...
+    #endregion
 }   
 
 ?>

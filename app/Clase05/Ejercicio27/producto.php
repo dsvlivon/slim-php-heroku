@@ -1,39 +1,104 @@
 <?php
-include "archivos.php";
+include "archivo.php";
 
 class producto
 {
-    /*$c = $_POST["codigo"];
-    $n = $_POST["nombre"];
-    $t = $_POST["tipo"];
-    $s = $_POST["stock"];
-    $p = $_POST["precio"];
-    $i = rand(0,10000);
-    $prod = new producto($c,$n,$t,$s,$p,$i);*/
-
-    public $_nombre;
+    public $_id;
     public $_codigo;
+    public $_nombre;
     public $_tipo;
     public $_stock;
     public $_precio;
-    public $_id;
-    //$prod = new producto($c,$n,$t,$s,$p,$i);
-    public function __construct($c,$n,$t,$s,$p,$i)
+    public $_fechaDeCreacion;
+    public $_ultimaModificacion;
+   
+    public function __construct($i,$c,$n,$t,$s,$p,$f,$u)
     {
+        $this->_id = $i;
+        $this->_codigo = $c;  
         $this->_nombre = $n;
-        $this->_codigo = $c;
         $this->_tipo = $t;
         $this->_stock = $s;
         $this->_precio = $p;
-        $this->_id = $i;
+        $this->_fechaDeCreacion = $f;
+        $this->_ultimaModificacion = $u;
     }    
+    #region DB
+    public function _PersistirDB()
+	{//codigo nombre tipo stock precio fechaDeCreacion  ultimaModificacion
+        $objetoAccesoDato = archivo::dameUnObjetoAcceso(); 
+        $consulta =$objetoAccesoDato->RetornarConsulta("INSERT INTO productos 
+        (codigo,nombre,tipo,stock,precio,fechaDeCreacion,ultimaModificacion)
+        VALUES(:codigo,:nombre,:tipo,:stock,:precio,:fechaDeCreacion,:ultimaModificacion)");
+        $consulta->bindValue(':codigo',$this->_codigo, PDO::PARAM_STR);
+        $consulta->bindValue(':nombre',$this->_nombre, PDO::PARAM_STR);
+        $consulta->bindValue(':tipo',$this->_tipo, PDO::PARAM_STR);
+        $consulta->bindValue(':stock', $this->_stock, PDO::PARAM_INT);
+        $consulta->bindValue(':precio', $this->_precio, PDO::PARAM_STR);//no estoy seguro de este?
+        //StackOVerflow says: use PDO::PARAM_STR for all column types which are not of type int or Bool(osea q hay q reconvertirlo...)
+        $consulta->bindValue(':fechaDeCreacion', $this->_localidad, PDO::PARAM_STR);
+        $consulta->bindValue(':ultimaModificacion', $this->_localidad, PDO::PARAM_STR);
+        $consulta->execute();		
+        return $objetoAccesoDato->RetornarUltimoIdInsertado();
+    }
 
-    static function _CargaListaCSV($a)
+    public static function TraerTodoLosCds()
+	{
+			$objetoAccesoDato = archivo::dameUnObjetoAcceso(); 
+			$consulta =$objetoAccesoDato->RetornarConsulta("SELECT id,
+            codigo AS codigo, nombre AS nombre,tipo AS tipo, stock AS stock, 
+            from productos");
+			$consulta->execute();			
+			return $consulta->fetchAll(PDO::FETCH_CLASS, "cd");		
+	}
+    #endregion
+    #region JSON
+    static function _PersistirJSON($obj, $a)
     {
-        $listaU=array();
+        if($obj->_codigo!= null && $obj->_id!=null)
+        {    
+            $msg = json_encode($obj);
+            //echo $msg;
+            archivo::_GuardarJSON($msg, $a);
+        }
+        else
+        {
+            echo "Faltan Datos";
+        }
+    }
+
+    static function _CargaListaJSON($a)
+    {
+        $lista=array();
         if($a!=null)
         {
-            $lineas = archivos::_CargarCsv($a);
+            $contenido = archivo::_CargarJSON($a);
+            if($contenido!=null)
+            {
+                foreach ($contenido as $item) 
+                {       
+                    $n = $item->_nombre;
+                    $c = $item->_codigo;
+                    $t = $item->_tipo;
+                    $s = $item->_stock;
+                    $p = $item->_precio;
+                    $i = $item->_id;
+                    $obj = new  producto($c,$n,$t,$s,$p,$i);
+                    //$prod = new producto($c,$n,$t,$s,$p,$i);
+                    array_push($lista, $obj);
+                }
+            }
+        }
+        return $lista;
+    }
+    #endregion
+    #region CSV
+    static function _CargaListaCSV($a)
+    {
+        $lista=array();
+        if($a!=null)
+        {
+            $lineas = archivo::_CargarCsv($a);
             if($lineas!=null)
             {
                 for ($i=0; $i <count($lineas) ; $i++) 
@@ -46,11 +111,11 @@ class producto
                     $p = $ats[4];
                     $i = $ats[5];
                     $obj = new  obj($c,$n,$t,$s,$p,$i);
-                    array_push($listaU, $obj);
+                    array_push($lista, $obj);
                 }
             }
         }
-        return $listaU;
+        return $lista;
     }   
 
     static function _PersistirCSV($obj, $a)
@@ -64,7 +129,7 @@ class producto
                 if($item->_codigo != $obj->_codigo && $item->_id != $obj->_id)
                 {
                     $msg = "\n".$obj->_codigo.",".$obj->_nombre.",".$obj->_tipo.",".$obj->_stock.",".$obj->_precio.",".$obj->_id.";";
-                    archivos::_GuardarCsv($msg, $a);
+                    archivo::_GuardarCsv($msg, $a);
                 }    
             }            
         }
@@ -73,66 +138,8 @@ class producto
             echo "Faltan Datos";
         }
     }
-    
-    static function _PersistirJSON($obj, $a)
-    {
-        if($obj->_codigo!= null && $obj->_id!=null)
-        {    
-            $msg = json_encode($obj);
-            //echo $msg;
-            archivos::_GuardarJSON($msg, $a);
-        }
-        else
-        {
-            echo "Faltan Datos";
-        }
-    }
-
-    static function _CargaListaJSON($a)
-    {
-        $listaU=array();
-        if($a!=null)
-        {
-            $contenido = archivos::_CargarJSON($a);
-            if($contenido!=null)
-            {
-                foreach ($contenido as $item) 
-                {       
-                    $n = $item->_nombre;
-                    $c = $item->_codigo;
-                    $t = $item->_tipo;
-                    $s = $item->_stock;
-                    $p = $item->_precio;
-                    $i = $item->_id;
-                    $obj = new  producto($c,$n,$t,$s,$p,$i);
-                    //$prod = new producto($c,$n,$t,$s,$p,$i);
-                    array_push($listaU, $obj);
-                }
-            }
-        }
-        return $listaU;
-    }
-
-    /*static function _GenerarId()
-    {
-        $l = array();
-        $l = usuario::_CargaLista("usuarios.csv");
-
-        for($i=0, $i<count($l),$i++) 
-        {
-            if(l[$i]._id==0)
-            {
-                if(l[$i]._id < l[$i+1]._id)
-                {
-                    
-                }
-            }    
-            else{$id=0;}
-        }
-    
-        return $id;
-    }*/
-    
+    #endregion
+    #region Propias
     static function _validarProducto($obj, $a)
     {
         if($obj->_codigo!=null && $obj->_id!=null)
@@ -156,7 +163,7 @@ class producto
                     }
                 }
                 //producto::_ImprimirLista($l);
-                archivos::_GuardarArray($l, $a);
+                archivo::_GuardarArray($l, $a);
                 echo "\nActualizado";
             }
             // echo "lista salida:\n";
@@ -215,5 +222,7 @@ class producto
         }      
         return false;
     }
+
+    #endregion
 }
 ?>
