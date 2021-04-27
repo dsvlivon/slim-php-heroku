@@ -1,6 +1,6 @@
 <?php
-include "archivo.php";
-include "AccesoDatos.php";
+include_once "archivo.php";
+
 
 class usuario
 {
@@ -10,7 +10,7 @@ class usuario
     public $_mail;
     public $_feReg;
     public $_id;
-    public $_localidad;
+    public $_localidad;//nombre,apellido,clave,mail,feReg,id,localidad
     
     #region Propias
     public function __construct()
@@ -18,16 +18,16 @@ class usuario
 
     }
     
-    // public function _usuarioConId($i, $n, $a, $c, $m, $f, $l)
-    // { 
-    //     $this->_id = $i;
-    //     $this->_nombre = $n;
-    //     $this->_apellido = $a;
-    //     $this->_clave = $c;
-    //     $this->_mail = $m;
-    //     $this->_feReg = $f;
-    //     $this->_localidad=$l;
-    // }    
+    public function _setUsuario($i, $n, $a, $c, $m, $f, $l)
+    { 
+        $this->_id = $i;
+        $this->_nombre = $n;
+        $this->_apellido = $a;
+        $this->_clave = $c;
+        $this->_mail = $m;
+        $this->_feReg = $f;
+        $this->_localidad=$l;
+    }    
     
     // public function _usuario($n, $a, $c, $m, $f, $l)
     // {
@@ -89,11 +89,11 @@ class usuario
     public function _ToString()
     {//nombre apellido clave mail feReg localidad
         $mensaje = "ID: ".$this->_id."<br/>".
-                    "Nombre: ".$this->_nombre."<br/>".
-                    "Apellido: ".$this->_apellido."<br/>".
-                    "Mail: ".$this->_mail."<br/>".
-                    "Localidad: ".$this->_localidad."<br/>".
-                    "Fecha Registro: ".$this->_feReg."<br/><br/>";        
+                   "Nombre: ".$this->_nombre."<br/>".
+                   "Apellido: ".$this->_apellido."<br/>".
+                   "Mail: ".$this->_mail."<br/>".
+                   "Localidad: ".$this->_localidad."<br/>".
+                   "Fecha Registro: ".$this->_feReg."<br/><br/>";        
         echo "DATOS DEL USUARIO: <br/>".$mensaje;
     }
 
@@ -106,9 +106,11 @@ class usuario
                 //echo $item->_ToString();
                 ////////////////////////////////////// "lo normal"
                 echo "<ul>"."<br/>";
-                echo "<li>".$item->_nombre."</li>";
+                echo "<li>".$item->_id."</li>";
+                echo "<li>".$item->_nombre." ".$item->_apellido."</li>";
                 echo "<li>".$item->_mail."</li>";
-                echo "<li>".$item->_clave."</li>";
+                //echo "<li>".$item->_clave."</li>";
+                echo "<li>".$item->_localidad."</li>";
                 echo "</ul>";
                 ////////////////////////////////////// "formato csv"
                 // $path = "Usuarios/Fotos/".$item->_nombre.".png";
@@ -124,18 +126,20 @@ class usuario
     }    
     #endregion
     #region DB
-    public static function _TraerTodos()//NO FUNCA
-    {
+    static function _SelectAll()//NO FUNCA//AHORA SI:p
+    {//nombre,apellido,clave,mail,feReg,id,localidad
         $l = array();
         $objetoAccesoDato = archivo::dameUnObjetoAcceso(); 
-        $consulta =$objetoAccesoDato->RetornarConsulta("SELECT id AS _id,nombre AS _nombre,apellido AS _apellido, mail AS _mail, clave AS _clave FROM personas");
+        $consulta =$objetoAccesoDato->RetornarConsulta("SELECT 
+        nombre AS _nombre, apellido AS _apellido, clave AS _clave, mail AS _mail, fechaRegistro AS _feReg, id AS _id, localidad AS _localidad
+        FROM personas");
         $consulta->execute();			
         $l = $consulta->fetchAll(PDO::FETCH_CLASS, "usuario");
         return $l;
         //var_dump($l);
 	}
 
-    public function _PersistirDB()
+    public function _Insert()
 	{//nombre apellido clave mail feReg localidad
         $objetoAccesoDato = archivo::dameUnObjetoAcceso(); 
         $consulta =$objetoAccesoDato->RetornarConsulta("INSERT into personas 

@@ -7,8 +7,10 @@
     cada objeto o clase tendrán los métodos para responder a la petición
     devolviendo un listado <ul> o tabla de html <table>
     *********************************************************/
-	include "usuario.php";
-   
+	include_once "usuario.php";
+    include_once "producto.php";
+    
+
     $a = $_GET["listado"];
     $l = array();
     
@@ -19,18 +21,14 @@
             usuario::_ImprimirLista($l);            
         break;
         case "productos.json":
-        break;
-        case "ventas.json":
-        break;
+            //echo "prod";
+            $l = producto::_SelectAll();            
+            producto::_ImprimirLista($l);        
+        break; 
         default:
+        echo "ups...";
         break;
     }
-    $l = array();
-    $l = usuario::_CargaListaJson("usuarios.json");
-       
-    echo usuario::_ImprimirLista($l);
-    
    
-    
 ?>
 

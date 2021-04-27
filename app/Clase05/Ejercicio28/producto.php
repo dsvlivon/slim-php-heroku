@@ -1,5 +1,5 @@
 <?php
-include "archivo.php";
+include_once "archivo.php";
 
 class producto
 {
@@ -11,8 +11,14 @@ class producto
     public $_precio;
     public $_fechaDeCreacion;
     public $_ultimaModificacion;
+
+
+    public function __construct()
+    {
+        
+    }
    
-    public function __construct($i,$c,$n,$t,$s,$p,$f,$u)
+    public function _setProducto($i,$c,$n,$t,$s,$p,$f,$u)
     {
         $this->_id = $i;
         $this->_codigo = $c;  
@@ -24,7 +30,7 @@ class producto
         $this->_ultimaModificacion = $u;
     }    
     #region DB
-    public function _PersistirDB()
+    public function _Insert()
 	{//codigo nombre tipo stock precio fechaDeCreacion  ultimaModificacion
         $objetoAccesoDato = archivo::dameUnObjetoAcceso(); 
         $consulta =$objetoAccesoDato->RetornarConsulta("INSERT INTO productos 
@@ -36,18 +42,22 @@ class producto
         $consulta->bindValue(':stock', $this->_stock, PDO::PARAM_INT);
         $consulta->bindValue(':precio', $this->_precio, PDO::PARAM_STR);//no estoy seguro de este?
         //StackOVerflow says: use PDO::PARAM_STR for all column types which are not of type int or Bool(osea q hay q reconvertirlo...)
-        $consulta->bindValue(':fechaDeCreacion', $this->_localidad, PDO::PARAM_STR);
-        $consulta->bindValue(':ultimaModificacion', $this->_localidad, PDO::PARAM_STR);
+        $consulta->bindValue(':fechaDeCreacion', $this->_fechaCreacion, PDO::PARAM_STR);
+        $consulta->bindValue(':ultimaModificacion', $this->_ulimaModificacion, PDO::PARAM_STR);
         $consulta->execute();		
         return $objetoAccesoDato->RetornarUltimoIdInsertado();
     }
 
-    public function _TraerTodos()
-	{
+    static function _SelectAll()
+    {//id codigo nombre tipo stock precio fechaDeCreacion  ultimaModificacion
+        $l = array();
         $objetoAccesoDato = archivo::dameUnObjetoAcceso(); 
-        $consulta =$objetoAccesoDato->RetornarConsulta("SELECT * from productos");
+        $consulta =$objetoAccesoDato->RetornarConsulta("SELECT 
+        codigo AS _codigo, nombre AS _nombre, tipo AS _tipo, stock AS _stock, precio AS _precio, fechaDeCreacion AS _fechaDeCreacion, ultimaModificacion AS _ultimaModificacion
+        FROM productos");
         $consulta->execute();			
-        return $consulta->fetchAll(PDO::FETCH_CLASS, "producto");		
+        $l = $consulta->fetchAll(PDO::FETCH_CLASS, "producto");
+        return $l;
 	}
     #endregion
     #region JSON
@@ -188,15 +198,17 @@ class producto
         if(is_array($l))
         {          
             foreach ($l as  $item) 
-            {
-                echo $item->_ToString();
+            {//codigo nombre tipo stock precio fechaDeCreacion  ultimaModificacion
+                //echo $item->_ToString();
                 ////////////////////////////////////// "lo normal"
-                // echo "<ul>"."<br/>";
-                // echo "<li>".$item->_nombre."</li>";
-                // echo "<li>".$item->_mail."</li>";
-                // echo "<li>".$item->_clave."</li>";
-                // echo "</ul>";
-                ////////////////////////////////////// "formato csv"
+                echo "<ul>"."<br/>";
+                echo "<li>".$item->_codigo."</li>";
+                echo "<li>".$item->_nombre."</li>";
+                echo "<li>".$item->_stock."</li>";
+                echo "<li>".$item->_precio."</li>";
+                echo "<li>".$item->_ultimaModificacion."</li>";
+                echo "</ul>";
+                //////////////////////////////////// "formato csv"
                 // $path = "Usuarios/Fotos/".$item->_nombre.".png";
                 // echo "<ul>"."<br/>";
                 // echo "<li>".$item->_nombre."/".$item->_mail."/".$item->_fecha."/".$item->_id."/"."<img src=\"$path\">"."</li>";

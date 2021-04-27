@@ -1,0 +1,295 @@
+<?php
+include_once "archivo.php";
+
+class producto
+{
+    public $_id;
+    public $_codigo;
+    public $_nombre;
+    public $_tipo;
+    public $_stock;
+    public $_precio;
+    public $_fechaDeCreacion;
+    public $_ultimaModificacion;
+
+
+    public function __construct()
+    {
+        
+    }
+     
+    #region Propias
+    public function _setProducto($c,$n,$t,$s,$p,$u)
+    {
+        ///$this->_id = $i;
+        $this->_codigo = $c;  
+        $this->_nombre = $n;
+        $this->_tipo = $t;
+        $this->_stock = $s;
+        $this->_precio = $p;
+        //$this->_fechaDeCreacion = $f;
+        $this->_ultimaModificacion = $u;
+    } 
+
+    static function _validarProducto($obj, $l)
+    {
+        if($obj != null && $l != null)
+        {
+            if(producto::_BuscarPorCodigo($obj, $l)==false)
+            {
+                echo "\nIngresado"."\nId nro.: ".$obj->_Insert();                
+            }
+            else
+            {
+                foreach ($l as $item) 
+                {
+                    if(producto::_BuscarPorCodigo($obj, $l)==true)
+                    {
+                        $obj->_stock += $item->_stock;
+                        break;
+                    }
+                }
+                $obj->_Update();
+                echo "\nActualizado";
+            }
+            // echo "lista salida:\n";
+            // producto::_ImprimirLista($l);
+        }
+        else{
+            echo "\nNo se pudo hacer";
+        }
+    }
+
+    static function _validarProducto2($obj, $a)
+    {
+        if($obj->_codigo!=null && $obj->_id!=null)
+        {
+            $l = array();
+            $l = producto::_CargaListaJson($a);
+            //var_dump($l);
+            if(producto::_BuscarPorCodigo($obj, $l)==false)
+            {
+                array_push($l, $obj);
+                producto::_PersistirJSON($obj, $a);
+                echo "\nIngresado";
+                return $l;
+            }
+            else{
+                foreach ($l as $item) 
+                {
+                    if($item->_codigo == $obj->_codigo)
+                    {
+                       $item->_stock += $obj->_stock;
+                    }
+                }
+                //producto::_ImprimirLista($l);
+                archivo::_GuardarArray($l, $a);
+                echo "\nActualizado";
+            }
+            // echo "lista salida:\n";
+            // producto::_ImprimirLista($l);
+        }
+        else{
+            echo "\nNo se pudo hacer";
+        }
+    }
+
+    public function _ToString()
+    {
+        $mensaje =  "Nombre: ".$this->_nombre."<br/>".
+                    "Mail: ".$this->_codigo."<br/>".
+                    "Stock: ".$this->_stock."<br/>".
+                    "Precio: ".$this->_precio."<br/>".
+                    "ID: ".$this->_id."<br/>".
+                    "<br/>";     
+        echo "DATOS DEL USUARIO: <br/>".$mensaje;
+    }
+
+    static function _ImprimirLista($l)
+    {
+        if(is_array($l))
+        {          
+            foreach ($l as  $item) 
+            {//codigo nombre tipo stock precio fechaDeCreacion  ultimaModificacion
+                //echo $item->_ToString();
+                ////////////////////////////////////// "lo normal"
+                echo "<ul>"."<br/>";
+                echo "<li>".$item->_codigo."</li>";
+                echo "<li>".$item->_nombre."</li>";
+                echo "<li>".$item->_stock."</li>";
+                echo "<li>".$item->_precio."</li>";
+                echo "<li>".$item->_ultimaModificacion."</li>";
+                echo "</ul>";
+                //////////////////////////////////// "formato csv"
+                // $path = "Usuarios/Fotos/".$item->_nombre.".png";
+                // echo "<ul>"."<br/>";
+                // echo "<li>".$item->_nombre."/".$item->_mail."/".$item->_fecha."/".$item->_id."/"."<img src=\"$path\">"."</li>";
+                // echo "</ul>";
+            }
+        }
+        else
+        {
+            echo "Error en la lista";
+        }
+    }
+
+    static function _BuscarPorCodigo($obj, $l)
+    {
+        foreach ($l as $item) 
+        {      
+            if($item->_codigo == $obj->_codigo && $item->_id == $obj->_id)
+            {
+                return true;
+            }            
+        }      
+        return false;
+    }
+
+    #endregion
+    #region DB
+    public function _Insert()
+	{//codigo nombre tipo stock precio fechaDeCreacion  ultimaModificacion
+        $objetoAccesoDato = archivo::dameUnObjetoAcceso(); 
+        $consulta =$objetoAccesoDato->RetornarConsulta("INSERT INTO productos 
+        (codigo,nombre,tipo,stock,precio,fechaDeCreacion,ultimaModificacion)
+        VALUES(:codigo,:nombre,:tipo,:stock,:precio,:fechaDeCreacion,:ultimaModificacion)");
+        $consulta->bindValue(':codigo',$this->_codigo, PDO::PARAM_STR);
+        $consulta->bindValue(':nombre',$this->_nombre, PDO::PARAM_STR);
+        $consulta->bindValue(':tipo',$this->_tipo, PDO::PARAM_STR);
+        $consulta->bindValue(':stock', $this->_stock, PDO::PARAM_INT);
+        $consulta->bindValue(':precio', $this->_precio, PDO::PARAM_STR);//no estoy seguro de este?
+        //StackOVerflow says: use PDO::PARAM_STR for all column types which are not of type int or Bool(osea q hay q reconvertirlo...)
+        $consulta->bindValue(':fechaDeCreacion', $this->_fechaCreacion, PDO::PARAM_STR);
+        $consulta->bindValue(':ultimaModificacion', $this->_ulimaModificacion, PDO::PARAM_STR);
+        $consulta->execute();		
+        return $objetoAccesoDato->RetornarUltimoIdInsertado();
+    }
+
+    public function _Delete()
+    {
+        $objetoAccesoDato = archivo::dameUnObjetoAcceso(); 
+        $consulta =$objetoAccesoDato->RetornarConsulta("DELETE FROM productos 				
+        WHERE id=:id");	
+        $consulta->bindValue(':id',$this->_id, PDO::PARAM_INT);		
+        $consulta->execute();
+        return $consulta->rowCount();
+    }
+
+    public function _Update()
+    {//codigo nombre tipo stock precio fechaDeCreacion  ultimaModificacion
+        $objetoAccesoDato = archivo::dameUnObjetoAcceso(); 
+        $consulta =$objetoAccesoDato->RetornarConsulta("UPDATE productos 
+        SET codigo=:codigo, nombre=:nombre, tipo=:tipo, stock=:stock, precio=:precio, ultimaModificacion=:ultimaModificacion
+        WHERE id=:id");
+        $consulta->bindValue(':codigo',$this->_codigo, PDO::PARAM_INT);
+        $consulta->bindValue(':nombre',$this->_nombre, PDO::PARAM_STR);
+        $consulta->bindValue(':tipo', $this->_tipo, PDO::PARAM_STR);
+        $consulta->bindValue(':stock', $this->_stock, PDO::PARAM_STR);
+        $consulta->bindValue(':precio', $this->_precio, PDO::PARAM_STR);
+        $consulta->bindValue(':ultimaModificacion', $this->_ultimaModificacion);//ponele!
+        return $consulta->execute();
+    }
+
+    static function _SelectAll()
+    {//id codigo nombre tipo stock precio fechaDeCreacion  ultimaModificacion
+        $l = array();
+        $objetoAccesoDato = archivo::dameUnObjetoAcceso(); 
+        $consulta =$objetoAccesoDato->RetornarConsulta("SELECT 
+        codigo AS _codigo, nombre AS _nombre, tipo AS _tipo, stock AS _stock, precio AS _precio, fechaDeCreacion AS _fechaDeCreacion, ultimaModificacion AS _ultimaModificacion
+        FROM productos");
+        $consulta->execute();			
+        $l = $consulta->fetchAll(PDO::FETCH_CLASS, "producto");
+        return $l;
+	}
+
+    #endregion
+    #region JSON
+    static function _PersistirJSON($obj, $a)
+    {
+        if($obj->_codigo!= null && $obj->_id!=null)
+        {    
+            $msg = json_encode($obj);
+            //echo $msg;
+            archivo::_GuardarJSON($msg, $a);
+        }
+        else
+        {
+            echo "Faltan Datos";
+        }
+    }
+
+    static function _CargaListaJSON($a)
+    {
+        $lista=array();
+        if($a!=null)
+        {
+            $contenido = archivo::_CargarJSON($a);
+            if($contenido!=null)
+            {
+                foreach ($contenido as $item) 
+                {       
+                    $n = $item->_nombre;
+                    $c = $item->_codigo;
+                    $t = $item->_tipo;
+                    $s = $item->_stock;
+                    $p = $item->_precio;
+                    $i = $item->_id;
+                    $obj = new  producto($c,$n,$t,$s,$p,$i);
+                    //$prod = new producto($c,$n,$t,$s,$p,$i);
+                    array_push($lista, $obj);
+                }
+            }
+        }
+        return $lista;
+    }
+    #endregion
+    #region CSV
+    static function _CargaListaCSV($a)
+    {
+        $lista=array();
+        if($a!=null)
+        {
+            $lineas = archivo::_CargarCsv($a);
+            if($lineas!=null)
+            {
+                for ($i=0; $i <count($lineas) ; $i++) 
+                { 
+                    $ats = explode(",",$lineas[$i]);
+                    $c = $ats[0];
+                    $n = $ats[1];
+                    $t = $ats[2];
+                    $s = $ats[3];
+                    $p = $ats[4];
+                    $i = $ats[5];
+                    $obj = new  obj($c,$n,$t,$s,$p,$i);
+                    array_push($lista, $obj);
+                }
+            }
+        }
+        return $lista;
+    }   
+
+    static function _PersistirCSV($obj, $a)
+    {
+        if($obj->_nombre!=null && $obj->_stock!=null && $obj->_id!=null)
+        {
+            $l = array();
+            $l = usuario::_CargaLista($a);
+            foreach ($l as $item) 
+            {
+                if($item->_codigo != $obj->_codigo && $item->_id != $obj->_id)
+                {
+                    $msg = "\n".$obj->_codigo.",".$obj->_nombre.",".$obj->_tipo.",".$obj->_stock.",".$obj->_precio.",".$obj->_id.";";
+                    archivo::_GuardarCsv($msg, $a);
+                }    
+            }            
+        }
+        else
+        {
+            echo "Faltan Datos";
+        }
+    }
+    #endregion
+    
+}
+?>
